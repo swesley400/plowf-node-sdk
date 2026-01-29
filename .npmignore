@@ -1,0 +1,25 @@
+# Source
+src/
+
+# Tests
+tests/
+coverage/
+jest.config.js
+
+# Config
+tsconfig.json
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# Git
+.git/
+.gitignore
+
+# Misc
+*.log
+*.tgz
+node_modules/
