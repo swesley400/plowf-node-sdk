@@ -38,12 +38,18 @@ export interface Transfer {
 export interface CreateTransferData {
     value: number;
     pix_key: string;
+    document?: string;
     account_uuid?: string;
     external_ref?: string;
     final_beneficiary?: FinalBeneficiary;
 }
 
 export interface ListTransfersParams extends PaginationParams {
+    uuid?: string;
     status?: TransferStatus;
     type?: TransferType;
+    start_date?: string;
+    end_date?: string;
+    transfer_start_date?: string;
+    transfer_end_date?: string;
 }

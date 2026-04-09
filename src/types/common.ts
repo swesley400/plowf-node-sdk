@@ -46,6 +46,10 @@ export type PixType = 'QR_DYNAMIC' | 'QR_STATIC';
 
 export type MovementType = 'IN' | 'OUT';
 
+export type SplitType = 'PERCENTAGE' | 'FIXED';
+
+export type SplitStatus = 'PENDING' | 'CREDITED' | 'FAILED';
+
 export interface Bank {
     code: string;
     name: string;

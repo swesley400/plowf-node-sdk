@@ -7,6 +7,8 @@ import {
     Account,
     AdditionalInfo,
     PixType,
+    SplitType,
+    SplitStatus,
 } from '../../types/common';
 
 export interface PixDetails {
@@ -35,6 +37,25 @@ export interface PaymentDetails {
     updated_at: string;
 }
 
+export interface SplitRecipientAccount {
+    uuid: string;
+    name: string;
+}
+
+export interface Split {
+    uuid: string;
+    type: SplitType;
+    value: number;
+    status: SplitStatus;
+    recipient_account: SplitRecipientAccount;
+}
+
+export interface CreateSplitData {
+    type: 'percentage' | 'fixed';
+    value: number;
+    recipient_account_uuid: string;
+}
+
 export interface Charge {
     uuid: string;
     value: number;
@@ -46,6 +67,7 @@ export interface Charge {
     payment: PaymentDetails | null;
     external_ref: string | null;
     final_beneficiary: FinalBeneficiary | null;
+    splits: Split[];
     history: StatusHistory[];
     created_at: string;
     updated_at: string;
@@ -56,6 +78,7 @@ export interface CreateChargeData {
     value: number;
     external_ref?: string;
     final_beneficiary?: FinalBeneficiary;
+    splits?: CreateSplitData[];
 }
 
 export interface RefundChargeData {
@@ -72,6 +95,12 @@ export interface RefundResponse {
 }
 
 export interface ListChargesParams extends PaginationParams {
+    uuid?: string;
     status?: ChargeStatus;
     type?: ChargeType;
+    end_to_end?: string;
+    charge_start_date?: string;
+    charge_end_date?: string;
+    start_date?: string;
+    end_date?: string;
 }

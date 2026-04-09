@@ -241,6 +241,75 @@ await plowf.webhooks.delete('e1afe0f4-9358-4a50-b0fd-55912ca86ee1');
 
 ---
 
+### MEDs (Mecanismo Especial de Devolução)
+
+Gerencie MEDs para disputas de transações PIX.
+
+#### Métodos Disponíveis
+
+| Método | Descrição |
+|--------|-----------|
+| `list(params?)` | Lista MEDs com paginação e filtros |
+| `get(uuid)` | Busca um MED pelo UUID |
+| `reply(uuid, data)` | Responde a um MED |
+
+#### Listar MEDs
+
+```typescript
+const response = await plowf.meds.list({
+    status: 'PROCESSING',
+    med_type: 'RECEIVED_MED',
+});
+
+for (const med of response.data) {
+    console.log('MED:', med.uuid, med.status);
+}
+```
+
+#### Buscar MED
+
+```typescript
+const med = await plowf.meds.get('550e8400-e29b-41d4-a716-446655440000');
+console.log('Status:', med.data.status);
+console.log('Tipo:', med.data.med_type);
+```
+
+#### Responder MED
+
+```typescript
+const response = await plowf.meds.reply('550e8400-e29b-41d4-a716-446655440000', {
+    accept: false,
+    analysis: 'Transação legítima, cliente confirmou a compra.',
+});
+```
+
+---
+
+### Splits (Divisão de Pagamentos)
+
+Ao criar uma cobrança, você pode configurar splits para dividir o valor entre contas.
+
+```typescript
+const charge = await plowf.payments.create({
+    type: 'pix',
+    value: 10000, // R$ 100,00
+    splits: [
+        {
+            type: 'percentage',
+            value: 10, // 10%
+            recipient_account_uuid: '550e8400-e29b-41d4-a716-446655440000',
+        },
+        {
+            type: 'fixed',
+            value: 500, // R$ 5,00
+            recipient_account_uuid: '660e8400-e29b-41d4-a716-446655440001',
+        },
+    ],
+});
+```
+
+---
+
 ## Interfaces e Tipos
 
 ### Configuração
