@@ -1,12 +1,13 @@
 import { PlowfConfig, mergeConfig } from './config';
 import { HttpClient } from './http/http-client';
-import { PaymentsService, TransfersService, WebhooksService, MedsService } from './resources';
+import { PaymentsService, TransfersService, WebhooksService, MedsService, PixKeysService } from './resources';
 
 export class PlowfClient {
     public readonly payments: PaymentsService;
     public readonly transfers: TransfersService;
     public readonly webhooks: WebhooksService;
     public readonly meds: MedsService;
+    public readonly pixKeys: PixKeysService;
 
     private readonly http: HttpClient;
     private readonly config: Required<PlowfConfig> & { baseURL: string };
@@ -26,5 +27,6 @@ export class PlowfClient {
         this.transfers = new TransfersService(this.http);
         this.webhooks = new WebhooksService(this.http);
         this.meds = new MedsService(this.http);
+        this.pixKeys = new PixKeysService(this.http);
     }
 }
